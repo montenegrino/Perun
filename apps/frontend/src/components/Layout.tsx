@@ -34,6 +34,12 @@ export default function Layout() {
                   Send
                 </Link>
                 <Link
+                  to="/buy"
+                  className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100"
+                >
+                  Buy
+                </Link>
+                <Link
                   to="/transactions"
                   className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-100"
                 >

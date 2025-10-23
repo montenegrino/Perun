@@ -51,6 +51,14 @@ export const pricingApi = {
   getCurrentPrices: (currency = 'EUR') => api.get('/pricing', { params: { currency } })
 };
 
+// Purchase API
+export const purchaseApi = {
+  createIntent: (data: any) => api.post('/purchase/intent', data),
+  capturePayPal: (orderId: string) => api.post('/purchase/paypal/capture', { orderId }),
+  createBankTransfer: (data: any) => api.post('/purchase/bank-transfer', data),
+  getPurchase: (id: string) => api.get(`/purchase/${id}`)
+};
+
 // Admin API
 export const adminApi = {
   getDashboard: () => api.get('/admin/dashboard'),
@@ -63,5 +71,7 @@ export const adminApi = {
   getTransactions: (params?: any) => api.get('/admin/transactions', { params }),
   mintTokens: (data: any) => api.post('/admin/tokens/mint', data),
   setPrice: (data: any) => api.post('/admin/tokens/price', data),
-  getAuditLogs: (params?: any) => api.get('/admin/audit', { params })
+  getAuditLogs: (params?: any) => api.get('/admin/audit', { params }),
+  getPendingPurchases: () => api.get('/admin/purchases'),
+  confirmBankTransfer: (id: string) => api.post(`/admin/purchases/${id}/confirm`)
 };

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { AdminService } from '../services/AdminService';
-import { UserRepository, TransactionRepository, AuditLogRepository } from '../db/repositories';
+import { PurchaseService } from '../services/PurchaseService';
+import { UserRepository, TransactionRepository, AuditLogRepository, PurchaseRepository } from '../db/repositories';
 import { authenticate, requireAdmin } from '../middleware/auth';
 import { ipAllowlist } from '../middleware/ipAllowlist';
 import { validateBody } from '../middleware/validation';
@@ -8,9 +9,11 @@ import { adjustBalanceSchema, mintTokensSchema, setPriceSchema } from '@perper/s
 
 const router = Router();
 const adminService = new AdminService();
+const purchaseService = new PurchaseService();
 const userRepo = new UserRepository();
 const txRepo = new TransactionRepository();
 const auditRepo = new AuditLogRepository();
+const purchaseRepo = new PurchaseRepository();
 
 // Apply authentication and admin role to all routes
 router.use(authenticate);
@@ -234,6 +237,36 @@ router.get('/audit', async (req, res, next) => {
       size: filters.size,
       totalPages: Math.ceil(result.total / filters.size)
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * GET /api/admin/purchases
+ * Get pending purchases (bank transfers awaiting confirmation)
+ */
+router.get('/purchases', async (req, res, next) => {
+  try {
+    // This would require adding a method to PurchaseRepository
+    // For now, return a placeholder
+    res.json({ purchases: [] });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * POST /api/admin/purchases/:id/confirm
+ * Confirm bank transfer
+ */
+router.post('/purchases/:id/confirm', async (req, res, next) => {
+  try {
+    const result = await purchaseService.confirmBankTransfer(
+      req.params.id,
+      req.user!.userId
+    );
+    res.json(result);
   } catch (error) {
     next(error);
   }

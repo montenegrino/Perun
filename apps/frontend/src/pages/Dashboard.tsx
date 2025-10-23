@@ -31,7 +31,10 @@ export default function Dashboard() {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
         <div className="space-x-2">
-          <Link to="/send" className="btn-primary">
+          <Link to="/buy" className="btn-primary">
+            Buy Tokens
+          </Link>
+          <Link to="/send" className="btn-secondary">
             Send Tokens
           </Link>
         </div>

@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Send from './pages/Send';
+import Buy from './pages/Buy';
 import Transactions from './pages/Transactions';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminUsers from './pages/admin/Users';
@@ -65,6 +66,7 @@ function AppRoutes() {
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="send" element={<Send />} />
+        <Route path="buy" element={<Buy />} />
         <Route path="transactions" element={<Transactions />} />
 
         <Route

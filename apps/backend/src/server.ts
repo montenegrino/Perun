@@ -12,6 +12,7 @@ import authRoutes from './routes/auth';
 import walletRoutes from './routes/wallet';
 import adminRoutes from './routes/admin';
 import pricingRoutes from './routes/pricing';
+import purchaseRoutes from './routes/purchase';
 
 const app = express();
 
@@ -25,6 +26,12 @@ app.use(
     credentials: true
   })
 );
+
+// Stripe webhook needs raw body - must be before body parsing
+app.post('/api/webhooks/stripe', express.raw({ type: 'application/json' }), (req, res, next) => {
+  // This will be handled by purchase routes
+  next();
+});
 
 // Body parsing
 app.use(express.json());
@@ -53,6 +60,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/wallets', walletRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/pricing', pricingRoutes);
+app.use('/api/purchase', purchaseRoutes);
+app.use('/api/webhooks', purchaseRoutes);
 
 // 404 handler
 app.use(notFoundHandler);
