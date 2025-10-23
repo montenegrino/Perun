@@ -4,24 +4,87 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-brand-light-bg text-brand-text-dark antialiased;
+  }
+
+  * {
+    @apply transition-colors duration-200;
   }
 }
 
 @layer components {
+  /* Premium Gold Button - Primary CTA */
   .btn-primary {
-    @apply px-4 py-2 bg-perper-gold text-white rounded-lg hover:bg-yellow-600 transition-colors font-medium;
+    @apply px-6 py-3 bg-gradient-gold text-white rounded-lg font-semibold
+           shadow-gold hover:shadow-lg hover:scale-105
+           transform transition-all duration-200
+           border border-brand-gold/20;
   }
 
+  /* Orange Accent Button - Secondary */
   .btn-secondary {
-    @apply px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors font-medium;
+    @apply px-6 py-3 bg-white text-brand-text-dark rounded-lg font-semibold
+           border-2 border-brand-gold hover:bg-brand-gold hover:text-white
+           transition-all duration-200;
   }
 
+  /* Outline Button */
+  .btn-outline {
+    @apply px-6 py-3 bg-transparent text-brand-gold rounded-lg font-semibold
+           border-2 border-brand-gold hover:bg-brand-gold hover:text-white
+           transition-all duration-200;
+  }
+
+  /* Input Field with Gold Focus */
   .input-field {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-perper-gold focus:border-transparent outline-none;
+    @apply w-full px-4 py-3 border-2 border-gray-200 rounded-lg
+           focus:ring-2 focus:ring-brand-gold focus:border-brand-gold
+           outline-none bg-white text-brand-text-dark
+           placeholder:text-gray-400;
   }
 
+  /* Premium Card - White with Subtle Shadow */
   .card {
-    @apply bg-white rounded-lg shadow-md p-6;
+    @apply bg-white rounded-xl shadow-lg p-6 border border-gray-100
+           hover:shadow-xl transition-shadow duration-200;
+  }
+
+  /* Dark Hero Card */
+  .card-dark {
+    @apply bg-gradient-dark rounded-xl shadow-2xl p-6 border border-brand-gold/20
+           text-brand-text-light;
+  }
+
+  /* Gold Accent Card */
+  .card-gold {
+    @apply bg-gradient-gold rounded-xl shadow-gold p-6
+           text-brand-text-light;
+  }
+
+  /* Page Container */
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  }
+
+  /* Section Headers */
+  .section-title {
+    @apply text-3xl font-bold text-brand-text-dark mb-6;
+  }
+
+  .section-title-dark {
+    @apply text-3xl font-bold text-brand-text-light mb-6;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-gold {
+    @apply badge bg-brand-gold/10 text-brand-gold border border-brand-gold/20;
+  }
+
+  .badge-orange {
+    @apply badge bg-brand-orange/10 text-brand-orange border border-brand-orange/20;
   }
 }
