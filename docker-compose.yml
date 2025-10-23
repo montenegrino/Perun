@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  arangodb:
+    image: arangodb:3.11
+    container_name: perper-arangodb
+    environment:
+      ARANGO_ROOT_PASSWORD: changeme
+      ARANGO_NO_AUTH: 0
+    ports:
+      - '8529:8529'
+    volumes:
+      - arangodb_data:/var/lib/arangodb3
+      - arangodb_apps:/var/lib/arangodb3-apps
+    networks:
+      - perper-network
+    healthcheck:
+      test: ['CMD', 'wget', '--spider', '-q', 'http://localhost:8529/_api/version']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: perper-backend
+    environment:
+      NODE_ENV: development
+      PORT: 8080
+      ARANGO_URL: http://arangodb:8529
+      ARANGO_DB: perper
+      ARANGO_USER: root
+      ARANGO_PASSWORD: changeme
+    env_file:
+      - .env
+    ports:
+      - '8080:8080'
+    depends_on:
+      arangodb:
+        condition: service_healthy
+    networks:
+      - perper-network
+    volumes:
+      - ./apps/backend:/app/apps/backend
+      - ./packages/shared:/app/packages/shared
+      - /app/node_modules
+      - /app/apps/backend/node_modules
+    command: npm run dev
+
+volumes:
+  arangodb_data:
+  arangodb_apps:
+
+networks:
+  perper-network:
+    driver: bridge
